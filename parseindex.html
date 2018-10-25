@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <title>Masculiniteeeee</title>
+        <script type="text/javascript" src="d3.js"></script>
+        <style type="text/css">
+        
+            div.bar {
+                display: inline-block;
+                width: 20px;
+                height: 75px;
+                background-color: teal;
+                margin-right: 2px;
+            }
+
+        </style>
+    </head>
+    <body>
+        <script type="text/javascript">
+            // This can be thought of as "main". Since we have to parse the data first
+            // all functions must be refrenced in the defined parameter function
+            d3.csv("raw-responses.csv", rowConverter, function(data){
+                // if you want to use data, call the function from here
+                // to ensure it is loaded in
+                dataset = data;
+                getQ7Counts();
+                makeViz();
+            });
+            var dataset = [];
+            var q7Counts = [ [], [], [], [], [], [], [], [], [], [], []];
+            // takes an input and does string compares to assign int values to string answers
+            // note that 6 is an error input
+            function ansToInt(d){
+                if(d === "Never, and not open to it"){ //numbers can be rearranged as needed
+                    return 1;
+                }else if(d === "Never, but open to it"){
+                    return 2;
+                }else if(d === "No answer"){
+                    return 0;
+                }else if(d === "Often"){
+                    return 5;
+                }else if(d === "Rarely"){
+                    return 3;
+                }else if(d === "Sometimes"){
+                    return 4;
+                }else{
+                  return 6; //error code
+                }
+            }
+            // this iterates through the dataset and gets counts for each questions and answer
+            // notation:
+            //      q7Counts[Question part number with 0 indexing][answer /*encoding is above*/]
+            function getQ7Counts(){
+                for(var i = 0; i < dataset.length; i++){
+                    q7Counts[0][dataset[i].q0007_0001]++;
+                    q7Counts[1][dataset[i].q0007_0002]++
+                    q7Counts[2][dataset[i].q0007_0003]++
+                    q7Counts[3][dataset[i].q0007_0004]++
+                    q7Counts[4][dataset[i].q0007_0005]++
+                    q7Counts[5][dataset[i].q0007_0006]++
+                    q7Counts[6][dataset[i].q0007_0007]++
+                    q7Counts[7][dataset[i].q0007_0008]++
+                    q7Counts[8][dataset[i].q0007_0009]++
+                    q7Counts[9][dataset[i].q0007_0010]++
+                    q7Counts[10][dataset[i].q0007_0011]++
+                }
+            }
+            // this is a row converter fucntion automatically called by csvparser when passed in
+            // assigns variables to be int values instead of string
+            function rowConverter(d) {
+                return {
+                    q0007_0001: ansToInt(d.q0007_0001),
+                    q0007_0002: ansToInt(d.q0007_0002),
+                    q0007_0003: ansToInt(d.q0007_0003),
+                    q0007_0004: ansToInt(d.q0007_0004),
+                    q0007_0005: ansToInt(d.q0007_0005),
+                    q0007_0006: ansToInt(d.q0007_0006),
+                    q0007_0007: ansToInt(d.q0007_0007),
+                    q0007_0008: ansToInt(d.q0007_0008),
+                    q0007_0009: ansToInt(d.q0007_0009),
+                    q0007_0010: ansToInt(d.q0007_0010),
+                    q0007_0011: ansToInt(d.q0007_0011)
+                };
+            }
+            // this will be called to make the viz
+            function makeViz(){
+                    //put viz here
+                }
+            }
+        </script>
+    </body>
+</html> 
